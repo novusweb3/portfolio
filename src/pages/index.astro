@@ -516,27 +516,11 @@ const services = [
 </style>
 
 <script>
-// Add carousel functionality
-document.addEventListener('DOMContentLoaded', () => {
-  const track = document.querySelector('.carousel-track');
-  const cards = document.querySelectorAll('.tech-card');
-  const prev = document.querySelector('.prev');
-  const next = document.querySelector('.next');
-  let currentIndex = 0;
-
-  function updateCarousel() {
-    const cardWidth = cards[0].offsetWidth + 32; // Including gap
+  const track = document.querySelector('.carousel-track') as HTMLElement;
+  const cards = document.querySelectorAll('.carousel-card') as NodeListOf<HTMLElement>;
+  
+  if (track && cards.length > 0) {
+    const cardWidth = cards[0].offsetWidth + 32;
     track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
   }
-
-  prev?.addEventListener('click', () => {
-    currentIndex = Math.max(currentIndex - 1, 0);
-    updateCarousel();
-  });
-
-  next?.addEventListener('click', () => {
-    currentIndex = Math.min(currentIndex + 1, cards.length - 3);
-    updateCarousel();
-  });
-});
 </script>

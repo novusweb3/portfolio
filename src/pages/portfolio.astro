@@ -1,60 +1,77 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 
-const projects = [
+interface Project {
+  title: string;
+  subtitle: string;
+  image: string;
+  category: string;
+  link?: string;
+}
+
+const projects: Project[] = [
   {
     title: "MikeProWash",
     subtitle: "Roof / Driveway washing Website",
     image: "/projects/mikeprowash.png",
-    category: "Business Website"
+    category: "Business Website",
+    link: "https://example.com"
   },
   {
     title: "Madident.online",
     subtitle: "Dental Technology Website",
     image: "/projects/madident.png",
-     category: "Healthcare"
+     category: "Healthcare",
+    link: "https://example.com"
   },
   {
     title: "South Fulton Photography",
     subtitle: "Photography Portfolio",
     image: "/projects/southfultonphotography.png",
-     category: "Portfolio"
+     category: "Portfolio",
+    link: "https://example.com"
   },
   {
     title: "Andrew Sedman's Music",
     subtitle: "Music Artist Website",
     image: "/projects/andrewsedman.png",
-    category: "Portfolio"
+    category: "Portfolio",
+    link: "https://example.com"
   },
   {
     title: "Formularul A1 Online",
     subtitle: "Document Processing Platform",
     image: "/projects/formulara1.png",
-    category: "Web Application"
+    category: "Web Application",
+    link: "https://example.com"
   },
   {
     title: "Edmentum",
     subtitle: "Online Learning Portal",
     image: "/projects/edmentum.png",
-    category: "Education"
+    category: "Education",
+    link: "https://example.com"
   },
   {
     title: "South Fulton Recording",
     subtitle: "Recording Studio Website",
     image: "/projects/sfrs.png",
-    category: "Business Website"
+    category: "Business Website",
+    link: "https://example.com"
   },
   {
     title: "Limbrick Wood Baptist Church",
     subtitle: "Church Website",
     image: "/projects/lwbc.png",
-    category: "Non-Profit"
+    category: "Non-Profit",
+    link: "https://example.com"
   },
   {
     title: "Mainsail Industries",
     subtitle: "Learning Portal",
     image: "/projects/mainsail.png",
-    category: "Education"
+    category: "Education",
+    link: "https://example.com"
   }
 ];
 ---
@@ -67,7 +84,7 @@ const projects = [
 
     <div class="projects-grid">
       {projects.map((project) => (
-        <a href={project.link} class="project-card" target="_blank" rel="noopener noreferrer">
+        <a href={project.link || '#'} class="project-card" target="_blank" rel="noopener noreferrer">
           <div class="project-image">
             <img src={project.image} alt={project.title} loading="lazy" />
             <div class="project-overlay">
