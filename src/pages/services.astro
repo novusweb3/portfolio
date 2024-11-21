@@ -1,0 +1,169 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const services = [
+  {
+    title: "AI Consulting",
+    description: "Strategic AI integration and consulting to transform your business operations. From chatbots to predictive analytics, we help you leverage AI technologies effectively.",
+    icon: "🤖"
+  },
+  {
+    title: "Custom IoT Development",
+    description: "End-to-end IoT solutions development, from hardware integration to software implementation, helping businesses connect and manage their smart devices efficiently.",
+    icon: "📱"
+  },
+  {
+    title: "Software Development",
+    description: "Bespoke software solutions tailored to your specific business needs, ensuring scalability, security, and optimal performance.",
+    icon: "💻"
+  },
+  {
+    title: "Web Development",
+    description: "Custom website development that combines functionality with user experience. We build scalable, responsive websites that drive results for your business.",
+    icon: "🌐"
+  },
+  {
+    title: "Web Design",
+    description: "Creative and responsive designs that capture your brand's essence. We create engaging user interfaces that convert visitors into customers.",
+    icon: "🎨"
+  },
+  {
+    title: "Digital Marketing",
+    description: "Comprehensive digital marketing strategies including SEO, PPC, social media marketing, and content creation to boost your online presence.",
+    icon: "📈"
+  },
+  {
+    title: "E-commerce Solutions",
+    description: "Robust e-commerce platforms that streamline online sales and enhance customer experience, from product management to secure payments.",
+    icon: "🛍️"
+  },
+  {
+    title: "IT Consulting",
+    description: "Expert guidance to optimize your technology infrastructure and streamline operations, ensuring your business stays ahead in the digital age.",
+    icon: "💡"
+  },
+  {
+    title: "Mobile App Development",
+    description: "Native and cross-platform mobile applications that extend your business reach and provide seamless user experiences across all devices.",
+    icon: "📱"
+  }
+];
+---
+
+<MainLayout title="Services - Adrian Birsan" description="Explore our range of digital services">
+  <div class="services-wrapper">
+    <header class="page-header">
+      <h1>Services</h1>
+      <p class="subtitle">Transforming Ideas into Digital Reality</p>
+    </header>
+
+    <div class="services-grid">
+      {services.map((service) => (
+        <div class="service-item">
+          <div class="service-content">
+            <div class="service-icon">{service.icon}</div>
+            <div class="service-details">
+              <h2>{service.title}</h2>
+              <p>{service.description}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+.services-wrapper {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+h1 {
+  font-size: 3rem;
+  color: #ff8c00;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  color: #bdbdbd;
+  font-size: 1.2rem;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.service-item {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.service-item:hover {
+  border-color: #ff8c00;
+  transform: translateY(-2px);
+}
+
+.service-content {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.service-icon {
+  font-size: 2.5rem;
+  min-width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 12px;
+}
+
+.service-details h2 {
+  color: #e0e0e0;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.service-details p {
+  color: #bdbdbd;
+  line-height: 1.6;
+}
+
+@media (max-width: 1200px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-wrapper {
+    padding: 1rem;
+  }
+
+  .service-content {
+    align-items: center;
+    text-align: center;
+  }
+}
+</style>

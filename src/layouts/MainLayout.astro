@@ -1,0 +1,379 @@
+---
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    <title>{title}</title>
+  </head>
+  <body>
+    <aside class="left-sidebar">
+      <Header />
+      <button id="left-sidebar-toggle" class="sidebar-toggle" aria-label="Toggle left sidebar">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+    </aside>
+    
+    <div class="content-wrapper">
+      <main class="main-content">
+        <slot />
+      </main>
+      
+      <footer class="main-footer">
+        <Footer />
+      </footer>
+    </div>
+    
+    <aside class="right-sidebar">
+      <div class="portrait-gallery">
+        <div class="portrait-item">
+          <img src="/dreamit.png" alt="Portrait 1" />
+        </div>
+        <div class="portrait-item">
+          <img src="/buildit.png" alt="Portrait 2" />
+        </div>
+        <div class="portrait-item">
+          <img src="/celebrateit.png" alt="Portrait 3" />
+        </div>
+      </div>
+    </aside>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    background-color: #1a1a1a;
+  }
+
+  html {
+    font-family: system-ui, sans-serif;
+    background: #1a1a1a;
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    background-color: #1a1a1a;
+  }
+
+  .content-wrapper {
+    margin-left: 280px;
+    margin-right: 280px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+  }
+
+  .main-content {
+    flex: 1;
+    background-color: #1a1a1a;
+    position: relative;
+  }
+
+  .main-footer {
+    background-color: #1a1a1a;
+    padding: 2rem;
+    border-top: 1px solid #333;
+  }
+
+  .left-sidebar,
+  .right-sidebar {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 280px;
+    background-color: #1a1a1a;
+    transition: transform 0.3s ease;
+  }
+
+  .left-sidebar {
+    left: 0;
+    border-right: 1px solid #333;
+  }
+
+  .right-sidebar {
+    right: 0;
+    border-left: 1px solid #333;
+    transform: translateX(0);
+  }
+
+  .left-sidebar.collapsed {
+    transform: translateX(-280px);
+  }
+
+  .right-sidebar.collapsed {
+    transform: translateX(280px);
+  }
+
+  .sidebar-toggle {
+    position: absolute;
+    top: 20px;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    z-index: 100;
+  }
+
+  .sidebar-toggle:hover {
+    opacity: 1;
+    color: #ff8c00;
+  }
+
+  #left-sidebar-toggle {
+    right: -24px;
+  }
+
+  #right-sidebar-toggle {
+    left: -24px;
+  }
+
+  .sidebar-toggle.rotated svg {
+    transform: rotate(180deg);
+  }
+
+  .twitter-feed {
+    height: 100vh;
+    background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .twitter-feed h3 {
+    color: #e0e0e0;
+    margin: 0;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #333;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.2rem;
+  }
+
+  .twitter-timeline-wrapper {
+    flex: 1;
+    width: 280px;
+    overflow-y: auto;
+    background-color: #1a1a1a;
+  }
+
+  .twitter-timeline-wrapper iframe {
+    height: 100% !important;
+    min-height: calc(100vh - 60px) !important;
+  }
+
+  .twitter-timeline-wrapper::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .twitter-timeline-wrapper::-webkit-scrollbar-track {
+    background: #1a1a1a;
+  }
+
+  .twitter-timeline-wrapper::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 3px;
+  }
+
+  .twitter-timeline-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #444;
+  }
+
+  .right-sidebar {
+    width: 280px;
+    background-color: #1a1a1a;
+    border-left: 1px solid #333;
+  }
+
+  @media (max-width: 768px) {
+    .content-wrapper {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .left-sidebar,
+    .right-sidebar {
+      transform: translateX(-280px);
+    }
+
+    .right-sidebar {
+      transform: translateX(280px);
+    }
+  }
+</style> 
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Existing code...
+
+    // Enhanced Twitter timeline customization
+    const customizeTwitterTimeline = () => {
+      const iframe = document.querySelector('iframe#twitter-widget-0');
+      if (iframe) {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        if (iframeDoc) {
+          const style = iframeDoc.createElement('style');
+          style.textContent = `
+            body {
+              background-color: #1a1a1a !important;
+            }
+            .timeline-Tweet {
+              background-color: #1a1a1a !important;
+              border: 1px solid #333 !important;
+              margin: 8px 0 !important;
+              padding: 12px !important;
+              border-radius: 4px !important;
+            }
+            .timeline-Tweet:hover {
+              background-color: #222 !important;
+              border-color: #444 !important;
+            }
+            .timeline-Tweet-text {
+              color: #e0e0e0 !important;
+              font-size: 14px !important;
+              line-height: 1.4 !important;
+              margin: 0 !important;
+            }
+            .timeline-Tweet-metadata {
+              color: #666 !important;
+              font-size: 12px !important;
+              margin-top: 8px !important;
+            }
+            .timeline-Tweet-action {
+              color: #666 !important;
+            }
+            .timeline-Tweet-action:hover {
+              color: #ff8c00 !important;
+            }
+            .timeline-Body {
+              border: none !important;
+              background: none !important;
+            }
+            .timeline-Footer {
+              display: none !important;
+            }
+            .timeline-Header {
+              display: none !important;
+            }
+          `;
+          iframeDoc.head.appendChild(style);
+        }
+      }
+    };
+
+    // Multiple attempts to ensure styles are applied
+    [1000, 2000, 3000].forEach(delay => {
+      setTimeout(customizeTwitterTimeline, delay);
+    });
+  });
+</script> 
+
+<style>
+.custom-twitter-feed {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    padding: 15px;
+    width: 280px;
+    height: 100vh;
+    position: fixed;
+    right: 0;
+    top: 0;
+}
+
+/* Override Twitter's default styles */
+.twitter-timeline {
+    background-color: #1a1a1a !important;
+}
+
+iframe#twitter-widget-0 {
+    background-color: #1a1a1a !important;
+}
+
+/* Ensure the feed is responsive */
+.custom-twitter-feed {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .custom-twitter-feed {
+        display: none; /* Hide on mobile or adjust as needed */
+    }
+}
+</style>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+<style>
+.right-sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 280px;
+    height: 100vh;
+    background-color: #1a1a1a;
+    border-left: 1px solid #333;
+    padding: 1rem;
+}
+
+.portrait-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+    padding: 1rem;
+}
+
+.portrait-item {
+    flex: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    height: 180px;
+}
+
+.portrait-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.portrait-item:hover {
+    transform: scale(1.02);
+}
+
+/* Keep your responsive styles */
+@media (max-width: 768px) {
+    .right-sidebar {
+        display: none;
+    }
+}
+</style> 
