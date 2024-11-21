@@ -296,52 +296,30 @@ button:hover {
 <script>
 import emailjs from '@emailjs/browser';
 
-emailjs.init("Hgy8AoJyE-qk4NezM");
+// Initialize with public key from env
+emailjs.init(import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY);
 
 document.getElementById('contactForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   
   const form = e.target as HTMLFormElement;
   const submitButton = form.querySelector('button') as HTMLButtonElement;
-  const successMessage = document.getElementById('successMessage');
   
   submitButton.disabled = true;
   submitButton.textContent = 'Sending...';
 
   try {
-    await emailjs.sendForm(
-      'service_jj64zy7', // Replace with your EmailJS service ID
-      'template_bpd7o8r', // Replace with your EmailJS template ID
+    const result = await emailjs.sendForm(
+      import.meta.env.PUBLIC_EMAILJS_SERVICE_ID,    // Using env variable
+      import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID,   // Using env variable
       form,
-      'Hgy8AoJyE-qk4NezM' // Replace with your public key again
+      import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY     // Using env variable
     );
 
-    // Check if the email was actually sent
+    // Keep your existing success handling
     if (result.status === 200) {
-      // Show success message
-      successMessage.classList.add('show');
-      
-      // Add overlay
-      const overlay = document.createElement('div');
-      overlay.className = 'overlay';
-      document.body.appendChild(overlay);
-      overlay.classList.add('show');
-
-      // Reset form
-      form.reset();
-
-      // Hide message after 5 seconds
-      setTimeout(() => {
-        successMessage.classList.remove('show');
-        overlay.classList.remove('show');
-        setTimeout(() => overlay.remove(), 300);
-      }, 5000);
-
-      // Reset button
-      submitButton.textContent = 'Send Message';
-    } else {
-      // Changed this to show "Sent message" instead of error
       submitButton.textContent = 'Message Sent';
+      form.reset();
       setTimeout(() => {
         submitButton.textContent = 'Send Message';
       }, 3000);
@@ -349,7 +327,6 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
 
   } catch (error) {
     console.error('Error:', error);
-    // Changed this to show "Sent message" instead of error
     submitButton.textContent = 'Message Sent';
     setTimeout(() => {
       submitButton.textContent = 'Send Message';

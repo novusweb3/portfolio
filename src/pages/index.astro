@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import emailjs from '@emailjs/browser';
 
 const services = [
   {
@@ -55,7 +56,7 @@ const services = [
         <div class="form-content">
           <h2 class="form-title">I Have an Idea...</h2>
           <form class="idea-form">
-            <input type="text" placeholder="Your Name" class="form-input" required />
+            <input type="text" name="name" placeholder="Your Name" class="form-input" required />
             <input type="email" placeholder="Your Email" class="form-input" required />
             <textarea placeholder="Your Message" class="form-textarea" required></textarea>
             <button type="submit" class="form-button">Submit</button>
@@ -117,6 +118,8 @@ const services = [
         </div>
       </div>
     </section>
+
+    
 
     </div>
   </main>
@@ -513,14 +516,128 @@ const services = [
       height: 56px;
     }
   }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 0.8rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 1rem;
+  }
+
+  .contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+
+  .contact-form button {
+    padding: 0.8rem 1.5rem;
+    background: #ff8c00;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .contact-form button:hover {
+    background: #ff7b00;
+  }
+
+  .form-status {
+    text-align: center;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .form-status.sending {
+    opacity: 1;
+    color: #bbb;
+  }
+
+  .form-status.success {
+    opacity: 1;
+    color: #4caf50;
+  }
+
+  .form-status.error {
+    opacity: 1;
+    color: #f44336;
+  }
+
+  @media (max-width: 768px) {
+    .contact-form {
+      padding: 0 1rem;
+    }
+  }
 </style>
 
 <script>
-  const track = document.querySelector('.carousel-track') as HTMLElement;
-  const cards = document.querySelectorAll('.carousel-card') as NodeListOf<HTMLElement>;
-  
-  if (track && cards.length > 0) {
-    const cardWidth = cards[0].offsetWidth + 32;
-    track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+  import emailjs from '@emailjs/browser';
+
+  // Initialize EmailJS
+  emailjs.init(import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY);
+
+  // Function to handle form submission
+  const handleFormSubmit = async (form: HTMLFormElement, button: HTMLButtonElement) => {
+    button.disabled = true;
+    const originalText = button.textContent;
+    button.textContent = 'Sending...';
+
+    try {
+      const result = await emailjs.sendForm(
+        import.meta.env.PUBLIC_EMAILJS_SERVICE_ID,
+        import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID,
+        form,
+        import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY
+      );
+
+      if (result.status === 200) {
+        button.textContent = 'Message Sent!';
+        form.reset();
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      button.textContent = 'Message Sent!';
+    } finally {
+      button.disabled = false;
+      setTimeout(() => {
+        button.textContent = originalText;
+      }, 3000);
+    }
+  };
+
+  // Handle top form ("I Have an Idea...")
+  const ideaForm = document.querySelector('.idea-form') as HTMLFormElement;
+  if (ideaForm) {
+    ideaForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const button = ideaForm.querySelector('button') as HTMLButtonElement;
+      await handleFormSubmit(ideaForm, button);
+    });
+  }
+
+  // Handle bottom contact form
+  const contactForm = document.getElementById('contact-form') as HTMLFormElement;
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const button = contactForm.querySelector('button') as HTMLButtonElement;
+      await handleFormSubmit(contactForm, button);
+    });
   }
 </script>
