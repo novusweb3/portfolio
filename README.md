@@ -1,47 +1,124 @@
-# Astro Starter Kit: Minimal
+# Adrian Birsan's Portfolio Website
 
-```sh
-npm create astro@latest -- --template minimal
-```
+A modern, responsive portfolio website built with Astro, React, and TypeScript. This site showcases my professional work, skills, and services as a web developer and digital agency owner.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## 🚀 Features
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- Responsive layout with collapsible sidebars
+- Dark theme with orange accents
+- Interactive components built with React
+- Portfolio showcase with project cards
+- Services section with animated cards
+- Contact form integration
+- Social media integration
+- Smooth animations and transitions
+- AI-powered greeting bot
 
-## 🚀 Project Structure
+## 🛠️ Tech Stack
 
-Inside of your Astro project, you'll see the following folders and files:
+- [Astro](https://astro.build) - Static Site Generator
+- [React](https://reactjs.org) - UI Components
+- [TypeScript](https://www.typescriptlang.org) - Type Safety
+- CSS3 with custom properties and animations
+- Responsive Design
+- Environment Variables for configuration
 
-```text
+## 🏗️ Project Structure
+
 /
 ├── public/
+│ └── images/
+│ ├── profile.jpg
+│ ├── dreamit.jpg
+│ ├── buildit.jpg
+│ └── celebrateit.jpg
 ├── src/
-│   └── pages/
-│       └── index.astro
+│ ├── components/
+│ │ └── layout/
+│ │ ├── Header.astro
+│ │ └── Footer.astro
+│ ├── layouts/
+│ │ └── MainLayout.astro
+│ └── pages/
+│ ├── index.astro
+│ ├── about.astro
+│ ├── services.astro
+│ ├── portfolio.astro
+│ └── contact.astro
 └── package.json
+
+## 🎨 Key Features Implementation
+
+### Contact Form
+- Integrated EmailJS for serverless email handling
+- Custom success/error animations
+- Form validation
+- Responsive design
+
+### Portfolio Grid
+- Responsive 3-column grid layout
+- Project cards with hover effects
+- Filtered categories
+- Image optimization
+
+### Services Section
+- Three-column grid layout
+- Service cards with icons
+- Hover animations
+- Responsive design
+
+### Navigation
+- Collapsible sidebar
+- Social media links
+- Profile section
+- Responsive menu
+
+## 🔧 Configuration
+
+### EmailJS Setup
+1. Sign up for EmailJS
+2. Create an email template
+3. Get your public key
+4. Update the contact form with your credentials
+
+### Environment Variables
+Required environment variables:
+
+```env
+EMAIL_USER=your-email
+EMAIL_PASS=your-password
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 📱 Responsive Design
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- Desktop: Full three-column layout
+- Tablet: Two-column layout with collapsible sidebars
+- Mobile: Single column with hidden sidebars and hamburger menu
 
-Any static assets, like images, can be placed in the `public/` directory.
+## 🤝 Contributing
 
-## 🧞 Commands
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-All commands are run from the root of the project, from a terminal:
+## 📄 License
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+This project is licensed under the MIT License - see the LICENSE file for details
 
-## 👀 Want to learn more?
+## 👤 Author
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+**Adrian Birsan**
+- Website: [adrianbirsan.com](https://adrianbirsan.com)
+- GitHub: [@novusweb3](https://github.com/novusweb3)
+- LinkedIn: [Adrian Birsan](https://www.linkedin.com/in/adrianbirsan/)
+- Twitter: [@adrianbirsan_](https://twitter.com/adrianbirsan_)
+
+## 🙏 Acknowledgments
+
+- Astro.js team for the amazing framework
+- EmailJS for the email service integration
+- All contributors and users of this template
+
+
