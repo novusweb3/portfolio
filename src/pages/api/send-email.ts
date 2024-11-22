@@ -1,23 +1,31 @@
+import { Resend } from 'resend';
 import type { APIRoute } from 'astro';
-import emailjs from '@emailjs/browser';
 
-export const post: APIRoute = async ({ request }) => {
+const resend = new Resend('re_U2QF5AT6_FXJ3VqwfDrGCpWzd581x5k9P');
+
+export const POST: APIRoute = async ({ request }) => {
   try {
-    const data = await request.json();
-    
-    await emailjs.send(
-      import.meta.env.EMAILJS_SERVICE_ID,
-      import.meta.env.EMAILJS_TEMPLATE_ID,
-      data,
-      import.meta.env.EMAILJS_PUBLIC_KEY
-    );
+    const { name, email, subject, message } = await request.json();
 
-    return new Response(JSON.stringify({ message: 'Email sent successfully' }), {
-      status: 200
+    await resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: 'contact@ithd.co.uk',
+      subject: `New Contact Form: ${subject || 'Website Inquiry'}`,
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>From:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Subject:</strong> ${subject || 'N/A'}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
+      `
     });
+
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Failed to send email' }), {
-      status: 500
+    console.error('Email error:', error);
+    return new Response(JSON.stringify({ error: 'Failed to send email' }), { 
+      status: 500 
     });
   }
 }; 

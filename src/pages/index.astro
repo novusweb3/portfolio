@@ -64,10 +64,11 @@ const services = [
               required 
             />
             <input 
-              type="text" 
-              name="to_name" 
-              value="Adrian" 
-              hidden 
+              type="email" 
+              name="from_email" 
+              placeholder="Your Email" 
+              class="form-input" 
+              required 
             />
             <textarea 
               name="message" 
@@ -608,10 +609,14 @@ const services = [
   // Initialize EmailJS
   emailjs.init(import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY);
 
-  // Function to handle form submission
-  const handleFormSubmit = async (form: HTMLFormElement, button: HTMLButtonElement) => {
+  document.querySelector('.idea-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const form = e.target as HTMLFormElement;
+    const button = form.querySelector('button');
+    if (!button) return;
+    
     button.disabled = true;
-    const originalText = button.textContent;
     button.textContent = 'Sending...';
 
     try {
@@ -623,37 +628,17 @@ const services = [
       );
 
       if (result.status === 200) {
-        button.textContent = 'Message Sent!';
         form.reset();
+        button.textContent = 'Message Sent!';
       }
     } catch (error) {
       console.error('Error:', error);
-      button.textContent = 'Message Sent!';
+      button.textContent = 'Error Sending';
     } finally {
-      button.disabled = false;
       setTimeout(() => {
-        button.textContent = originalText;
+        button.disabled = false;
+        button.textContent = 'Submit';
       }, 3000);
     }
-  };
-
-  // Handle top form ("I Have an Idea...")
-  const ideaForm = document.querySelector('.idea-form') as HTMLFormElement;
-  if (ideaForm) {
-    ideaForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const button = ideaForm.querySelector('button') as HTMLButtonElement;
-      await handleFormSubmit(ideaForm, button);
-    });
-  }
-
-  // Handle bottom contact form
-  const contactForm = document.getElementById('contact-form') as HTMLFormElement;
-  if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const button = contactForm.querySelector('button') as HTMLButtonElement;
-      await handleFormSubmit(contactForm, button);
-    });
-  }
+  });
 </script>
