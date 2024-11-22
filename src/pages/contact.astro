@@ -30,18 +30,13 @@ import MainLayout from '../layouts/MainLayout.astro';
       <section class="contact-form-section">
         <form id="contactForm" class="contact-form">
           <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required />
+            <label for="from_name">Name</label>
+            <input type="text" id="from_name" name="from_name" required />
           </div>
           
           <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-          
-          <div class="form-group">
-            <label for="subject">Subject</label>
-            <input type="text" id="subject" name="subject" required />
+            <label for="to_name">To</label>
+            <input type="text" id="to_name" name="to_name" value="Adrian" readonly hidden />
           </div>
           
           <div class="form-group">
@@ -296,7 +291,7 @@ button:hover {
 <script>
 import emailjs from '@emailjs/browser';
 
-// Initialize with public key from env
+// Initialize EmailJS
 emailjs.init(import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY);
 
 document.getElementById('contactForm').addEventListener('submit', async (e) => {
@@ -310,29 +305,28 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
 
   try {
     const result = await emailjs.sendForm(
-      import.meta.env.PUBLIC_EMAILJS_SERVICE_ID,    // Using env variable
-      import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID,   // Using env variable
+      import.meta.env.PUBLIC_EMAILJS_SERVICE_ID,
+      import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID,
       form,
-      import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY     // Using env variable
+      import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY
     );
 
-    // Keep your existing success handling
     if (result.status === 200) {
       submitButton.textContent = 'Message Sent';
       form.reset();
-      setTimeout(() => {
-        submitButton.textContent = 'Send Message';
-      }, 3000);
+      // Reset the hidden "to_name" field
+      const toNameInput = form.querySelector('[name="to_name"]') as HTMLInputElement;
+      if (toNameInput) toNameInput.value = 'Adrian';
     }
 
   } catch (error) {
     console.error('Error:', error);
-    submitButton.textContent = 'Message Sent';
+    submitButton.textContent = 'Error Sending';
+  } finally {
     setTimeout(() => {
+      submitButton.disabled = false;
       submitButton.textContent = 'Send Message';
     }, 3000);
-  } finally {
-    submitButton.disabled = false;
   }
 });
 </script>
